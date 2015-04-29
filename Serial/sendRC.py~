@@ -19,11 +19,10 @@ def main():
     #yaw = raw_input('Enter Yaw Value: ')
 
     autoRC = [thr, pitch]
-
-    print(autoRC)
   
-    #ser.write(autoRC)
-    #ser.flush
+    ser.write(autoRC)
+    print('Values Sent')
+    ser.flush
 
 
 main()
