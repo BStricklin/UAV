@@ -38,16 +38,29 @@
 
 import rospy
 from std_msgs.msg import String
+from RPIO import PWM
+
+throttle = PWM.Servo()
+yaw = PWM.Servo()
+altitude_hold = PWM.Servo()
 
 def callback(data):
     ##rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
     #print(data)
-    if (data.data == "F"):
-        print("Forward")
-    if (data.data == "Y"):
-	print("Yaw")	
+    if (data.data == "W"):
+        print("Throttle Up: %s" data.data)
+	forward()
+    if (data.data == "D"):
+	print("Turn Right: %s" data.data)
+	turn_right()
+    if (data.data == "A"):
+	print("Turn Left: %s" data.data)
+	turn_left()
+
 
 def uav_listener():
+
+    #altitude_hold.set_servo(16, 1500)
 
     # In ROS, nodes are uniquely named. If two nodes with the same
     # node are launched, the previous one is kicked off. The
@@ -61,5 +74,17 @@ def uav_listener():
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
+
+def forward():
+    throttle.set_servo(17, 1300)
+
+def turn_right():
+    yaw.set_servo(15, 1800)
+
+def turn_left():
+    yaw.set_servo(15, 1300)    
+
 if __name__ == '__main__':
     uav_listener()
+
+
